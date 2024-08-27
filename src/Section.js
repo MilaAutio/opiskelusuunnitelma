@@ -78,12 +78,15 @@ function Section({ section, updateSection, deleteSection, onDragStart, onDragOve
               value={title}
               onChange={handleTitleChange}
             />
-            <div>
+            <div className="buttons">
               <button className="save-title-btn" onClick={handleTitleSave}>
                 Save
               </button>
               <button className="delete-section-btn" onClick={() => deleteSection(section.id)}>
                 X
+              </button>
+              <button className="toggle-tasks-btn" onClick={toggleShowTasks}>
+                {showTasks ? "Hide Tasks" : "Show Tasks"}
               </button>
             </div>
           </div>
@@ -99,7 +102,7 @@ function Section({ section, updateSection, deleteSection, onDragStart, onDragOve
                 ></div>
               </div>
             </div>
-            <div>
+            <div className="buttons">
               <button
                 className="edit-title-btn"
                 onClick={() => setIsEditingTitle(true)}
@@ -109,12 +112,12 @@ function Section({ section, updateSection, deleteSection, onDragStart, onDragOve
               <button className="delete-section-btn" onClick={() => deleteSection(section.id)}>
                 X
               </button>
+              <button className="toggle-tasks-btn" onClick={toggleShowTasks}>
+                {showTasks ? "Hide Tasks" : "Show Tasks"}
+              </button>
             </div>
           </div>
         )}
-        <button className="toggle-tasks-btn" onClick={toggleShowTasks}>
-          {showTasks ? "Hide Tasks" : "Show Tasks"}
-        </button>
       </div>
       {showTasks && (
         <div className="tasks-list">
