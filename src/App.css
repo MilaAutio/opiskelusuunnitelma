@@ -13,6 +13,21 @@ h1 {
   text-shadow: 1px 1px #f08080;
 }
 
+input, textarea {
+  width: 100%;
+  border-radius: 10px;
+  padding: 8px 12px;
+  border: 1px solid #ffb6c1;
+  font-size: 1em;
+  resize: none;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+input:focus, textarea:focus {
+  outline: 1px solid #f08080;
+}
+
 /* Buttonit */
 .add-section-btn, .edit-title-btn, .edit-task-btn, .save-title-btn, .save-task-btn, .delete-task-btn, .delete-section-btn, .add-task-btn {
   background-color: #ffb6c1;
@@ -25,10 +40,19 @@ h1 {
   font-size: 1em;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
+  white-space: nowrap;
 }
 
-.add-section-btn:hover, .edit-title-btn:hover, .edit-task-btn:hover, .save-title-btn:hover, .save-task-btn:hover, .delete-task-btn:hover, .delete-section-btn:hover, .add-task-btn:hover {
+.delete-task-btn, .delete-section-btn {
+  background-color: #f75a5a;
+}
+
+.add-section-btn:hover, .edit-title-btn:hover, .edit-task-btn:hover, .save-title-btn:hover, .save-task-btn:hover, .add-task-btn:hover {
   background-color: #ffa6b2;
+}
+
+.delete-task-btn:hover, .delete-section-btn:hover {
+  background-color: #ea3030;
 }
 
 /* Progress Bar */
