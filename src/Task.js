@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import './Task.css';
 
 function Task({ task, updateTask, deleteTask }) {
-  const [isEditingText, setIsEditingText] = useState(false);
-  const [isEditingNotes, setIsEditingNotes] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(task.text || "No Name");
   const [notes, setNotes] = useState(task.notes || "");
 
@@ -11,18 +10,13 @@ function Task({ task, updateTask, deleteTask }) {
     setText(e.target.value);
   };
 
-  const handleTextSave = () => {
-    setIsEditingText(false);
-    updateTask({ ...task, text: text.trim() || "No Name" });
-  };
-
   const handleNotesChange = (e) => {
     setNotes(e.target.value);
   };
 
-  const handleNotesSave = () => {
-    setIsEditingNotes(false);
-    updateTask({ ...task, notes });
+  const handleSave = () => {
+    setIsEditing(false);
+    updateTask({ ...task, text: text.trim() || "No Name", notes });
   };
 
   const toggleCompleted = () => {
@@ -42,59 +36,51 @@ function Task({ task, updateTask, deleteTask }) {
           <span className="checkbox-checkmark"></span>
         </label>
       </div>
-      {isEditingText ? (
-        <div>
-          <input
-            className="task-text"
-            type="text"
-            value={text}
-            onChange={handleTextChange}
-            placeholder="Task"
-          />
-          <button className="save-task-btn" onClick={handleTextSave}>
-            Save
-          </button>
-        </div>
-      ) : (
-        <div>
-          <span className={`task-text ${task.completed ? "completed" : ""}`}>
-            {text}
-          </span>
-          <button
-            className="edit-task-btn"
-            onClick={() => setIsEditingText(true)}
-          >
-            Edit
-          </button>
-        </div>
-      )}
-      <div className="task-notes">
-        {isEditingNotes ? (
+      {isEditing ? (
+        <div className="edit-task-container">
           <div>
+            <input
+              className="task-text"
+              type="text"
+              value={text}
+              onChange={handleTextChange}
+              placeholder="Task"
+            />
             <textarea
               className="task-notes-input"
               value={notes}
               onChange={handleNotesChange}
               placeholder="Add notes"
             />
-            <button className="save-notes-btn" onClick={handleNotesSave}>
-              Save Notes
-            </button>
           </div>
-        ) : (
+          <button className="save-task-btn" onClick={handleSave}>
+            Save
+          </button>
+        </div>
+      ) : (
+        <div className="show-task-container">
           <div>
-            <div className="task-notes-display">{notes || "No notes"}</div>
-            <button
-              className="edit-notes-btn"
-              onClick={() => setIsEditingNotes(true)}
-            >
-              Add/Edit Notes
-            </button>
+            <div className="task-text-container">
+              <span className={`task-text ${task.completed ? "completed" : ""}`}>
+                {text}
+              </span>
+            </div>
+            { notes && (
+              <div className="task-notes">
+                <div className="task-notes-display">{notes || "No notes"}</div>
+              </div>
+            ) }
           </div>
-        )}
-      </div>
+          <button
+            className="edit-task-btn"
+            onClick={() => setIsEditing(true)}
+          >
+            Edit Task
+          </button>
+        </div>
+      )}
       <button className="delete-task-btn" onClick={() => deleteTask(task.id)}>
-        Delete Task
+        X
       </button>
     </div>
   );
