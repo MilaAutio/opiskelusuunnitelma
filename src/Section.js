@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import Task from "./Task";
-import './Section.css'
+import './Section.css';
 
 function Section({ section, updateSection, deleteSection, onDragStart, onDragOver, onDrop }) {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -25,6 +25,12 @@ function Section({ section, updateSection, deleteSection, onDragStart, onDragOve
   const handleTitleSave = () => {
     setIsEditingTitle(false);
     updateSection({ ...section, title: title.trim() || "No Name" });
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleTitleSave();
+    }
   };
 
   const toggleShowTasks = () => {
@@ -77,6 +83,7 @@ function Section({ section, updateSection, deleteSection, onDragStart, onDragOve
               type="text"
               value={title}
               onChange={handleTitleChange}
+              onKeyDown={handleKeyDown} // Add this line to handle Enter key press
             />
             <div className="buttons">
               <button className="save-title-btn" onClick={handleTitleSave}>
