@@ -65,11 +65,11 @@ function Task({ task, updateTask, deleteTask }) {
                 {text}
               </span>
             </div>
-            { notes && (
+            {notes && (
               <div className="task-notes">
-                <div className="task-notes-display">{notes || "No notes"}</div>
+                <div className="task-notes-display">{notes}</div>
               </div>
-            ) }
+            )}
           </div>
           <button
             className="edit-task-btn"
