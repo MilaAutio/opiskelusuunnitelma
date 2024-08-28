@@ -6,6 +6,7 @@ import './App.css';
 function App() {
   const [sections, setSections] = useState([]);
   const [draggedSectionId, setDraggedSectionId] = useState(null);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
     // Hae osiot backendista
@@ -13,6 +14,7 @@ function App() {
       try {
         const response = await axios.get('http://localhost:5001/api/sections');
         setSections(response.data);
+        setIsInitialLoad(false);
       } catch (error) {
         console.error('Error fetching sections:', error);
       }
@@ -25,14 +27,16 @@ function App() {
     // Tallenna osiot backend-palvelimelle
     const saveSections = async () => {
       try {
-        await axios.post('http://localhost:5001/api/sections', sections);
+        if( !isInitialLoad ) {
+          await axios.post('http://localhost:5001/api/sections', sections);
+        }
       } catch (error) {
         console.error('Error saving sections:', error);
       }
     };
 
     saveSections();
-  }, [sections]);
+  }, [sections, isInitialLoad]);
 
   const addSection = () => {
     const newSection = { id: Date.now(), title: "", tasks: [] };
@@ -48,6 +52,7 @@ function App() {
   };
 
   const deleteSection = (id) => {
+    console.log('delete: ' + id)
     setSections(sections.filter((section) => section.id !== id));
   };
 
