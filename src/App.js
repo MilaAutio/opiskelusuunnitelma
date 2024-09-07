@@ -1,124 +1,67 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Section from "./Section";
+import React, { useState, useEffect } from 'react';
+import Login from './Login';
+import Register from './Register';
+import StudyPlanner from './StudyPlanner';
 import './App.css';
 
 function App() {
-  const [sections, setSections] = useState([]);
-  const [draggedSectionId, setDraggedSectionId] = useState(null);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   useEffect(() => {
-    // Hae osiot backendista
-    const fetchSections = async () => {
-      try {
-        const response = await axios.get('http://localhost:5001/api/sections');
-        setSections(response.data);
-        setIsInitialLoad(false);
-      } catch (error) {
-        console.error('Error fetching sections:', error);
-      }
-    };
-
-    fetchSections();
+    // Check if token is already present in localStorage
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    }
   }, []);
 
-  useEffect(() => {
-    // Tallenna osiot backend-palvelimelle
-    const saveSections = async () => {
-      try {
-        if( !isInitialLoad ) {
-          await axios.post('http://localhost:5001/api/sections', sections);
-        }
-      } catch (error) {
-        console.error('Error saving sections:', error);
-      }
-    };
-
-    saveSections();
-  }, [sections, isInitialLoad]);
-
-  const addSection = () => {
-    const newSection = { id: Date.now(), title: "", tasks: [] };
-    setSections([...sections, newSection]);
+  const handleLogin = () => {
+    setIsAuthenticated(true);
   };
 
-  const updateSection = (updatedSection) => {
-    setSections(
-      sections.map((section) =>
-        section.id === updatedSection.id ? updatedSection : section
-      )
-    );
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setShowRegister(false);
+    setIsAuthenticated(false);
   };
 
-  const deleteSection = (id) => {
-    console.log('delete: ' + id)
-    setSections(sections.filter((section) => section.id !== id));
+  const switchToRegister = () => {
+    setShowRegister(true);
   };
 
-  const overallProgress = () => {
-    const totalTasks = sections.reduce(
-      (acc, section) => acc + section.tasks.length,
-      0
-    );
-    const completedTasks = sections.reduce(
-      (acc, section) => acc + section.tasks.filter((task) => task.completed).length,
-      0
-    );
-    return totalTasks ? Math.round((completedTasks / totalTasks) * 100) : 0;
-  };
-
-  const handleDragStart = (e, id) => {
-    setDraggedSectionId(id);
-    e.dataTransfer.effectAllowed = "move";
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = "move";
-  };
-
-  const handleDrop = (e, targetId) => {
-    e.preventDefault();
-    const draggedSectionIndex = sections.findIndex(s => s.id === draggedSectionId);
-    const targetSectionIndex = sections.findIndex(s => s.id === targetId);
-
-    if (draggedSectionIndex === -1 || targetSectionIndex === -1) return;
-
-    const updatedSections = [...sections];
-    const [movedSection] = updatedSections.splice(draggedSectionIndex, 1);
-    updatedSections.splice(targetSectionIndex, 0, movedSection);
-
-    setSections(updatedSections);
-    setDraggedSectionId(null);
+  const switchToLogin = () => {
+    setShowRegister(false);
   };
 
   return (
     <div className="app">
       <h1>Study Planner</h1>
-      <div className="overall-progress">
-        Overall Progress: {overallProgress()}%
-        <div className="progress-bar">
-          <div
-            className="progress-bar-inner"
-            style={{ width: `${overallProgress()}%` }}
-          ></div>
-        </div>
-      </div>
-      {sections.map((section) => (
-        <Section
-          key={section.id}
-          section={section}
-          updateSection={updateSection}
-          deleteSection={deleteSection}
-          onDragStart={handleDragStart}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-        />
-      ))}
-      <button className="add-section-btn" onClick={addSection}>
-        Add Section
-      </button>
+
+      {isAuthenticated ? (
+        <>
+          <button onClick={handleLogout}>Logout</button>
+          <StudyPlanner />
+        </>
+      ) : showRegister ? (
+        <Register onLogin={handleLogin} />
+      ) : (
+        <Login onLogin={handleLogin} />
+      )}
+
+      {!isAuthenticated && (
+        <>
+          {showRegister ? (
+            <p>
+              Already have an account? <button onClick={switchToLogin}>Login</button>
+            </p>
+          ) : (
+            <p>
+              Don't have an account? <button onClick={switchToRegister}>Register</button>
+            </p>
+          )}
+        </>
+      )}
     </div>
   );
 }

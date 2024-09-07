@@ -29,7 +29,7 @@ input:focus, textarea:focus {
 }
 
 /* Buttonit */
-.add-section-btn, .edit-title-btn, .edit-task-btn, .save-title-btn, .save-task-btn, .delete-task-btn, .delete-section-btn, .add-task-btn {
+.add-section-btn, .edit-title-btn, .edit-task-btn, .save-title-btn, .save-task-btn, .delete-task-btn, .delete-section-btn, .add-task-btn, button {
   background-color: #ffb6c1;
   border: none;
   color: white;
@@ -73,6 +73,7 @@ input:focus, textarea:focus {
 }
 
 .overall-progress {
+  margin-top: 30px;
   margin-bottom: 20px;
   color: #333;
   font-size: 1.2em;
@@ -91,4 +92,32 @@ body {
   background-color: #f8f9fa;
   margin: 0;
   padding: 0;
+}
+
+/* lomakkeet */
+form {
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+}
+
+form input + input {
+  margin-top: 20px;
+}
+
+form button[type=submit] {
+  margin: 30px 0 0;
+  width: 100%;
+  font-size: 1.5rem;
+}
+
+.change-form {
+  margin-top: 50px;
+}
+
+/* notification */
+.notification {
+  margin-bottom: 20px;
+  color: red;
 }
