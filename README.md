@@ -1,3 +1,16 @@
+# Frontend for a study planner.
+
+A full-stack application where users can plan their studies.
+
+Users can create an account and log in to the application. After logging in, they can create sections and subtasks under those sections. The application shows the progress of each section and the overall progress of all sections.
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
