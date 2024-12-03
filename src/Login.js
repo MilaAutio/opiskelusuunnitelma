@@ -11,7 +11,7 @@ function Login({ onLogin }) {
     e.preventDefault();
     try {
       // Send login request with username and password
-      const response = await axios.post('http://localhost:5001/api/login', { username, password });
+      const response = await axios.post('https://api.milaa.fi/api/login', { username, password });
       const token = response.data.token;
       localStorage.setItem('token', token);
       onLogin(); // Notify parent component of successful login

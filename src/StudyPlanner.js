@@ -17,7 +17,7 @@ function StudyPlanner() {
 
   const fetchSections = async (token) => {
     try {
-      const response = await axios.get('http://localhost:5001/api/sections', {
+      const response = await axios.get('https://api.milaa.fi/api/sections', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSections(response.data);
@@ -37,7 +37,7 @@ function StudyPlanner() {
 
     try {
       if (!isInitialLoad) {
-        await axios.post('http://localhost:5001/api/sections', sections, {
+        await axios.post('https://api.milaa.fi/api/sections', sections, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }

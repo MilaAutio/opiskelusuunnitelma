@@ -11,7 +11,7 @@ function Register({ onLogin }) {
     e.preventDefault();
     try {
       // Send registration request with username and password
-      const response = await axios.post('http://localhost:5001/api/register', { username, password });
+      const response = await axios.post('https://api.milaa.fi/api/register', { username, password });
 
       // Store the token and treat user as logged in
       const token = response.data.token;

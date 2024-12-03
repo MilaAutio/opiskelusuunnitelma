@@ -1,6 +1,6 @@
 /* Yleinen asettelu */
 .app {
-  font-family: 'Nanum Pen Script', cursive;
+  font-family: "Poppins", sans-serif;
   text-align: center;
   padding: 20px;
   background-color: #f8f9fa;
@@ -82,13 +82,13 @@ input:focus, textarea:focus {
 
 /* Buttonien fontit */
 button {
-  font-family: 'Nanum Pen Script', cursive;
+  font-family: "Poppins", sans-serif;
   font-size: 1.2em;
 }
 
 /* Lisää fontit ja yleinen tyyli */
 body {
-  font-family: 'Nanum Pen Script', cursive;
+  font-family: "Poppins", sans-serif;
   background-color: #f8f9fa;
   margin: 0;
   padding: 0;
