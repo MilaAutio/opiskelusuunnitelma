@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Section from './Section';
 import axios from 'axios';
-import './App.css';
+import '../styles/App.css';
 
 function StudyPlanner() {
   const [sections, setSections] = useState([]);

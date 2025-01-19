@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import Task from "./Task";
-import './Section.css';
+import '../styles/Section.css';
 
 function Section({ section, updateSection, deleteSection, onDragStart, onDragOver, onDrop }) {
   const [isEditingTitle, setIsEditingTitle] = useState(false);

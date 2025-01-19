@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Login from './Login';
-import Register from './Register';
-import StudyPlanner from './StudyPlanner';
-import './App.css';
+import Login from './components/Login';
+import Register from './components/Register';
+import StudyPlanner from './components/StudyPlanner';
+import './styles/App.css';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
